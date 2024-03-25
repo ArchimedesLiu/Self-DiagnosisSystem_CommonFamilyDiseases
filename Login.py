@@ -174,6 +174,7 @@ def change_password_page():
 
 # Streamlit应用
 def main():
+    create_tables()
     # 根据URL查询参数决定显示哪个页面
     page = st.query_params.get('page')
     if page == 'register':
