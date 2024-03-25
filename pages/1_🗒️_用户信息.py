@@ -1,8 +1,11 @@
 from Login import create_conn
 import pandas as pd
 import streamlit as st
-
-
+from loguru import logger
+logger.info("This is log info!")
+logger.warning("This is log warn!")
+logger.error("This is log error!")
+logger.debug("This is log debug!")
 
 def click_button():
     st.session_state.clicked = True

@@ -3,8 +3,11 @@ import pymysql
 import time
 import hashlib
 from PIL import Image
-
-
+from loguru import logger
+logger.info("This is log info!")
+logger.warning("This is log warn!")
+logger.error("This is log error!")
+logger.debug("This is log debug!")
 # Convert Pass into hash format
 def make_hashes(password):
     return hashlib.sha256(str.encode(password)).hexdigest()
