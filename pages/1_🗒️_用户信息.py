@@ -102,6 +102,8 @@ else:
             st.error("🚨请完善所有信息后进行自诊🚨")
     # 在侧边栏增加退出登录的按钮
     with st.sidebar.container():
+        with st.container(border=False, height=335):
+            st.write("\n")
         if st.button("退出登录", type="primary", use_container_width=True):
             st.session_state.clicked = False
             del st.session_state.messages
