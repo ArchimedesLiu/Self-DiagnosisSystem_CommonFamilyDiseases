@@ -4,10 +4,13 @@ import time
 import hashlib
 from PIL import Image
 from loguru import logger
+
 logger.info("This is log info!")
 logger.warning("This is log warn!")
 logger.error("This is log error!")
 logger.debug("This is log debug!")
+
+
 # Convert Pass into hash format
 def make_hashes(password):
     return hashlib.sha256(str.encode(password)).hexdigest()
@@ -145,6 +148,8 @@ def register_page():
             st.error("🚨用户名或密码不能为空")
         elif new_phone == "":
             st.error("🚨手机号码不能为空")
+        elif len(new_phone) != 11:
+            st.error("🚨请输入正确的手机号码")
         else:
             if register(new_username, new_password, new_phone):
                 st.success("注册成功！请关闭页面进行登录")
@@ -172,7 +177,6 @@ def change_password_page():
                 st.success("密码已修改！请关闭页面进行登录")
             else:
                 st.error("🚨手机号码与用户不匹配，请检查后输入")
-
 
 
 # Streamlit应用
