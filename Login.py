@@ -65,8 +65,9 @@ def change_password(username, phone_number, new_password):
     conn = create_conn()
     cursor = conn.cursor()
     # 若用户不存在则提示用户不存在，请重新输入
-    cursor.execute("SELECT * FROM users WHERE username = %s", (username))
-    if cursor.fetchone() is None:
+    cursor.execute("SELECT phone_number FROM users WHERE username = %s", (username))
+    # 若用户对应手机号与输入手机号不一致则提示用户手机号错误，请重新输入
+    if str(cursor.fetchone()[0]) != phone_number:
         conn.commit()
         conn.close()
         return False
@@ -164,12 +165,14 @@ def change_password_page():
     forgot_phone_nember = st.text_input("**手机号码**")
     new_password = st.text_input("**新密码**", type="password")
     if st.button("确认", use_container_width=True):
-        if change_password(forgot_username, forgot_phone_nember, new_password):
-            st.success("密码已修改！请关闭页面进行登录")
-        elif forgot_username == "":
-            st.error("🚨手机号码下无用户，请检查后输入")
+        if forgot_username == "" or forgot_phone_nember == "":
+            st.error("🚨用户名或手机号码不能为空")
         else:
-            st.error("🚨用户名不存在，请重新输入")
+            if change_password(forgot_username, forgot_phone_nember, new_password):
+                st.success("密码已修改！请关闭页面进行登录")
+            else:
+                st.error("🚨手机号码与用户不匹配，请检查后输入")
+
 
 
 # Streamlit应用
