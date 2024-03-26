@@ -69,8 +69,9 @@ def change_password(username, phone_number, new_password):
     cursor = conn.cursor()
     # 若用户不存在则提示用户不存在，请重新输入
     cursor.execute("SELECT phone_number FROM users WHERE username = %s", (username))
+    user_phone = cursor.fetchone()
     # 若用户对应手机号与输入手机号不一致则提示用户手机号错误，请重新输入
-    if str(cursor.fetchone()[0]) != phone_number:
+    if (user_phone is None) or (str(user_phone[0]) != phone_number):
         conn.commit()
         conn.close()
         return False
